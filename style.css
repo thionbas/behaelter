@@ -1,12 +1,10 @@
-/* Fixierte Vorschau-Box auf A4 Landscape Ratio */
 .preview-container {
     width: 100%;
     max-width: 700px;
     aspect-ratio: 297 / 210;
     background: white;
-    border: 1px solid #d1d5db;
+    border: 2px solid #000; /* Schwarzer Rand wie das Blatt */
     overflow: hidden;
-    position: relative;
 }
 
 .label-canvas {
@@ -14,58 +12,53 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    background-color: white;
 }
 
-/* Präzise Drittelung */
 .row-zone {
     width: 100%;
-    height: 33.33%;
+    height: 33.333%; /* Exakt ein Drittel */
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 0 20px;
+    padding: 10px 40px;
     box-sizing: border-box;
-    overflow: hidden;
-    word-break: break-word;
-    font-family: Arial, Helvetica, sans-serif; /* Gleiche Schrift wie im PDF */
+    font-family: Helvetica, Arial, sans-serif;
+    line-height: 1.1;
 }
 
 .row-zone.top {
-    font-weight: 900;
-    border-bottom: 1px dashed #eee;
+    font-weight: bold;
+    border-bottom: 1px solid #eee;
 }
 
 .row-zone.mid {
-    font-weight: 700;
-    border-bottom: 1px dashed #eee;
+    font-weight: bold;
+    border-bottom: 1px solid #eee;
 }
 
 .row-zone.bot {
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
+    gap: 10px;
 }
 
 .ghs-flex { 
     display: flex; 
-    gap: 10px; 
+    gap: 15px; 
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 65%;
+    height: 60%;
 }
 
 .ghs-flex img {
-    max-height: 90%;
-    max-width: 14%;
+    height: 100%;
+    max-width: 15%;
     object-fit: contain;
 }
 
 .signal-text { 
-    height: 25%;
-    font-weight: 900; 
+    font-weight: bold; 
     font-style: italic; 
     text-transform: uppercase;
-    font-size: 1.5rem;
 }
