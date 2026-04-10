@@ -1,6 +1,6 @@
 const { jsPDF } = window.jspdf;
 
-// GHS Picker
+// GHS Picker (identisch wie zuvor)
 const ghsPicker = document.getElementById('ghsPicker');
 for (let i = 1; i <= 9; i++) {
     const id = i.toString().padStart(3, '0');
@@ -34,20 +34,25 @@ function updatePreview() {
         substance = substance.toUpperCase();
     }
 
-    // Browser-Vorschau Korrekturfaktor (pt zu px Schätzung)
-    const previewFactor = 0.5; 
+    // --- Synchronisierte Skalierung ---
+    // Ein A4 Blatt ist 297mm breit. Wenn die Vorschau z.B. 700px breit ist,
+    // entspricht 1mm im PDF etwa 2.35px im Browser.
+    const previewWidth = document.getElementById('previewCard').offsetWidth;
+    const scaleFactor = previewWidth / 297; 
+    const ptToMm = 0.3527; // 1pt ist 0.3527mm
 
     const pEl = document.getElementById('pPlant');
     pEl.innerText = plant;
-    pEl.style.fontSize = (pSize * previewFactor) + "px";
+    // Schriftgröße in px = Punktwert * mm-Faktor * Vorschau-Skalierung
+    pEl.style.fontSize = (pSize * ptToMm * scaleFactor) + "px";
 
     const sEl = document.getElementById('pSubstance');
     sEl.innerText = substance;
-    sEl.style.fontSize = (sSize * previewFactor) + "px";
+    sEl.style.fontSize = (sSize * ptToMm * scaleFactor) + "px";
 
     const sigEl = document.getElementById('pSignal');
     sigEl.innerText = signal;
-    sigEl.style.fontSize = "24px";
+    sigEl.style.fontSize = (30 * ptToMm * scaleFactor) + "px";
 
     const ghsZone = document.getElementById('pGhs');
     ghsZone.innerHTML = '';
@@ -58,6 +63,8 @@ function updatePreview() {
     });
 }
 
+// Event Listener
+window.addEventListener('resize', updatePreview);
 document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', updatePreview));
 
 document.getElementById('pdfBtn').onclick = () => {
@@ -76,40 +83,38 @@ document.getElementById('pdfBtn').onclick = () => {
         substance = substance.toUpperCase();
     }
 
-    const midX = 148.5; // Horizontale Mitte
+    const midX = 148.5; // Horizontale Mitte (297 / 2)
 
-    // 1. ANLAGENTEIL (Oberes Drittel: 0-70mm)
+    // 1. ANLAGENTEIL (Mitte des oberen Drittels = 35mm)
     doc.setFont("helvetica", "bold");
     doc.setFontSize(pSize);
-    // Vertikale Zentrierung: 35mm ist die Mitte des Drittels. 
-    // Wir addieren ein Drittel der Fontgröße (in mm umgerechnet), um optisch zu zentrieren.
-    const pY = 35 + (pSize * 0.353 / 3); 
-    doc.text(plant, midX, pY, { align: 'center', maxWidth: 260 });
+    // baseline: 'middle' sorgt dafür, dass y=35 die vertikale MITTE des Textes ist
+    doc.text(plant, midX, 35, { align: 'center', baseline: 'middle', maxWidth: 280 });
 
-    // 2. STOFFNAME (Mittleres Drittel: 70-140mm)
+    // 2. STOFFNAME (Mitte des mittleren Drittels = 105mm)
     doc.setFontSize(sSize);
-    const sY = 105 + (sSize * 0.353 / 3); 
-    doc.text(substance, midX, sY, { align: 'center', maxWidth: 260 });
+    doc.text(substance, midX, 105, { align: 'center', baseline: 'middle', maxWidth: 280 });
 
-    // 3. GHS & SIGNAL (Unteres Drittel: 140-210mm)
+    // 3. GHS & SIGNAL (Unteres Drittel)
     const iconSize = 45; 
     const gap = 5;
     const totalW = (selectedGhs.length * iconSize) + ((selectedGhs.length - 1) * gap);
     let startX = midX - (totalW / 2);
-    const iconY = 150; // Starthöhe für Icons im unteren Drittel
-
+    
+    // GHS Symbole etwas höher im unteren Drittel ansetzen (ca. 165mm)
     for(let g = 0; g < selectedGhs.length; g++) {
-        doc.addImage(`ghs_${selectedGhs[g]}.png`, 'PNG', startX + (g * (iconSize + gap)), iconY, iconSize, iconSize);
+        doc.addImage(`ghs_${selectedGhs[g]}.png`, 'PNG', startX + (g * (iconSize + gap)), 145, iconSize, iconSize);
     }
 
     if(signal) {
         doc.setFontSize(32);
         doc.setFont("helvetica", "bolditalic");
-        // Signalwort bei ca 200mm (kurz vor dem unteren Rand)
-        doc.text(signal, midX, 202, { align: 'center' });
+        // Signalwort bei 198mm (kurz vor dem unteren Rand)
+        doc.text(signal, midX, 198, { align: 'center', baseline: 'middle' });
     }
 
-    doc.save(`A4_Label_${plant || 'Export'}.pdf`);
+    doc.save(`Behaelter_${plant || 'Label'}.pdf`);
 };
 
+// Initialer Aufruf
 updatePreview();
