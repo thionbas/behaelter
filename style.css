@@ -1,1 +1,65 @@
 
+/* Vorschau im A4 Querformat-Verhältnis */
+.preview-wrapper {
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 297 / 210;
+    background: white;
+    border: 1px solid #ccc;
+}
+
+.label-box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+.label-text {
+    flex: 2; /* Nimmt den oberen Teil ein */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    text-align: center;
+    line-height: 1;
+    word-break: break-all;
+}
+
+.label-bottom {
+    flex: 1; /* Das untere Viertel/Drittel */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top: 2px solid #eee; /* Trennung zur besseren Visualisierung */
+    padding-top: 10px;
+}
+
+/* Symmetrische GHS-Zone */
+.ghs-zone-center { 
+    display: flex; 
+    gap: 15px; 
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 70%;
+}
+
+.ghs-zone-center img {
+    height: 80%; /* Füllt den Bereich fast ganz aus */
+    max-width: 18%;
+    object-fit: contain;
+}
+
+.signal-word-center { 
+    height: 20%;
+    text-align: center; 
+    font-weight: 900; 
+    font-style: italic; 
+    font-size: 1.5rem;
+    color: #000;
+}
