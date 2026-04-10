@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -23,43 +22,48 @@
         <section class="bg-white p-8 rounded-lg shadow-xl border border-gray-200">
             <h2 class="text-xl font-bold border-b pb-2 mb-6 uppercase text-gray-700">Konfiguration</h2>
             
-            <div class="space-y-5">
-                <div class="grid grid-cols-3 gap-4">
-                    <div class="col-span-2">
-                        <label class="block text-sm font-bold mb-1 text-gray-600 uppercase">Textinhalt</label>
-                        <input type="text" id="mainText" class="w-full p-3 border-2 rounded-md font-bold outline-none focus:border-[#064e3b]" placeholder="z.B. Stickstoff">
+            <div class="space-y-6">
+                <div class="p-4 bg-gray-50 rounded-md border border-gray-200">
+                    <label class="block text-sm font-bold mb-1 text-gray-600 uppercase">1. Anlagenteil (Oben)</label>
+                    <input type="text" id="plantPart" class="w-full p-3 border-2 rounded-md font-bold mb-3 outline-none focus:border-[#064e3b]" placeholder="z.B. A-101">
+                    <label class="flex justify-between text-xs font-bold text-gray-500 uppercase">
+                        <span>Schriftgröße Anlagenteil</span>
+                        <span id="plantSizeDisplay">80</span>
+                    </label>
+                    <input type="range" id="plantSize" min="20" max="200" value="80" class="w-full cursor-pointer accent-[#064e3b]">
+                </div>
+
+                <div class="p-4 bg-gray-50 rounded-md border border-gray-200">
+                    <label class="block text-sm font-bold mb-1 text-gray-600 uppercase">2. Stoffname (Mitte)</label>
+                    <input type="text" id="substanceName" class="w-full p-3 border-2 rounded-md font-bold mb-3 outline-none focus:border-[#064e3b]" placeholder="z.B. Natronlauge 50%">
+                    <label class="flex justify-between text-xs font-bold text-gray-500 uppercase">
+                        <span>Schriftgröße Stoff</span>
+                        <span id="substanceSizeDisplay">45</span>
+                    </label>
+                    <input type="range" id="substanceSize" min="10" max="150" value="45" class="w-full cursor-pointer accent-[#064e3b]">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-bold mb-1 text-gray-600 uppercase">Signalwort</label>
+                        <select id="signal" class="w-full p-3 border-2 rounded-md font-bold outline-none focus:border-[#064e3b]">
+                            <option value="">Keines</option>
+                            <option value="GEFAHR">GEFAHR</option>
+                            <option value="ACHTUNG">ACHTUNG</option>
+                        </select>
                     </div>
                     <div>
                         <label class="block text-sm font-bold mb-1 text-gray-600 uppercase">Format</label>
                         <select id="textCase" class="w-full p-3 border-2 rounded-md font-bold outline-none focus:border-[#064e3b]">
                             <option value="upper">GROSS</option>
-                            <option value="lower">klein</option>
                             <option value="original">Original</option>
                         </select>
                     </div>
                 </div>
 
                 <div>
-                    <label class="flex justify-between text-sm font-bold mb-1 text-gray-600 uppercase">
-                        <span>Schriftgröße Text</span>
-                        <span id="textSizeDisplay" class="text-[#064e3b]">60</span>
-                    </label>
-                    <input type="range" id="textSize" min="20" max="150" value="60" class="w-full cursor-pointer accent-[#064e3b]">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-bold mb-1 text-gray-600 uppercase">Signalwort</label>
-                    <select id="signal" class="w-full p-3 border-2 rounded-md font-bold outline-none focus:border-[#064e3b]">
-                        <option value="">Keines</option>
-                        <option value="GEFAHR">GEFAHR</option>
-                        <option value="ACHTUNG">ACHTUNG</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-bold mb-2 text-gray-600 uppercase">GHS Symbole (Max. 5)</label>
-                    <div id="ghsPicker" class="grid grid-cols-3 md:grid-cols-5 gap-2 bg-gray-50 p-3 rounded-md border-2">
-                    </div>
+                    <label class="block text-sm font-bold mb-2 text-gray-600 uppercase">GHS Symbole (Max. 6)</label>
+                    <div id="ghsPicker" class="grid grid-cols-3 md:grid-cols-5 gap-2 bg-white p-3 rounded-md border-2"></div>
                 </div>
             </div>
 
@@ -72,10 +76,11 @@
             <span class="text-sm font-bold text-gray-400 mb-3 uppercase tracking-widest">Vorschau (A4 Quer)</span>
             <div class="preview-wrapper shadow-2xl">
                 <div id="previewCard" class="label-box">
-                    <div id="pText" class="label-text">TEXT</div>
-                    <div class="label-bottom">
-                        <div id="pGhs" class="ghs-zone-center"></div>
-                        <div id="pSignal" class="signal-word-center"></div>
+                    <div id="pPlant" class="zone zone-top">ANLAGENTEIL</div>
+                    <div id="pSubstance" class="zone zone-mid">STOFFNAME</div>
+                    <div class="zone zone-bottom">
+                        <div id="pGhs" class="ghs-row"></div>
+                        <div id="pSignal" class="signal-word"></div>
                     </div>
                 </div>
             </div>
