@@ -1,5 +1,3 @@
-
-/* Vorschau im A4 Querformat-Verhältnis */
 .preview-wrapper {
     width: 100%;
     max-width: 600px;
@@ -13,53 +11,58 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 10px;
     box-sizing: border-box;
-    background-color: white;
 }
 
-.label-text {
-    flex: 2; /* Nimmt den oberen Teil ein */
+/* Die drei Drittel */
+.zone {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 900;
     text-align: center;
-    line-height: 1;
+    overflow: hidden;
     word-break: break-all;
 }
 
-.label-bottom {
-    flex: 1; /* Das untere Viertel/Drittel */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-top: 2px solid #eee; /* Trennung zur besseren Visualisierung */
-    padding-top: 10px;
+.zone-top {
+    flex: 1;
+    font-weight: 900;
+    border-bottom: 1px dashed #ddd;
 }
 
-/* Symmetrische GHS-Zone */
-.ghs-zone-center { 
+.zone-mid {
+    flex: 1;
+    font-weight: 700;
+    border-bottom: 1px dashed #ddd;
+}
+
+.zone-bottom {
+    flex: 1;
+    flex-direction: column;
+    padding-top: 5px;
+}
+
+.ghs-row { 
     display: flex; 
-    gap: 15px; 
+    gap: 8px; 
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 70%;
 }
 
-.ghs-zone-center img {
-    height: 80%; /* Füllt den Bereich fast ganz aus */
-    max-width: 18%;
+.ghs-row img {
+    height: 90%;
+    max-width: 15%;
     object-fit: contain;
 }
 
-.signal-word-center { 
-    height: 20%;
-    text-align: center; 
+.signal-word { 
+    height: 25%;
     font-weight: 900; 
     font-style: italic; 
-    font-size: 1.5rem;
-    color: #000;
+    font-size: 1.2rem;
+    text-transform: uppercase;
 }
