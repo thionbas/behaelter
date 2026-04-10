@@ -17,30 +17,28 @@
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-2 gap-10 mt-6">
+    <main class="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-2 gap-10 mt-6">
         
-        <section class="bg-white p-8 rounded-lg shadow-xl border border-gray-200">
+        <section class="bg-white p-8 rounded-lg shadow-xl border border-gray-200 h-fit">
             <h2 class="text-xl font-bold border-b pb-2 mb-6 uppercase text-gray-700">Konfiguration</h2>
             
             <div class="space-y-6">
                 <div class="p-4 bg-gray-50 rounded-md border border-gray-200">
-                    <label class="block text-sm font-bold mb-1 text-gray-600 uppercase">1. Anlagenteil (Oben)</label>
-                    <input type="text" id="plantPart" class="w-full p-3 border-2 rounded-md font-bold mb-3 outline-none focus:border-[#064e3b]" placeholder="z.B. A-101">
-                    <label class="flex justify-between text-xs font-bold text-gray-500 uppercase">
-                        <span>Schriftgröße Anlagenteil</span>
-                        <span id="plantSizeDisplay">80</span>
-                    </label>
-                    <input type="range" id="plantSize" min="20" max="200" value="80" class="w-full cursor-pointer accent-[#064e3b]">
+                    <label class="block text-sm font-bold mb-1 text-gray-600 uppercase">1. Anlagenteil (Oben - max 7 Zeichen)</label>
+                    <input type="text" id="plantPart" maxlength="15" class="w-full p-3 border-2 rounded-md font-bold mb-3 outline-none focus:border-[#064e3b]" placeholder="z.B. A-101">
+                    <div class="flex items-center gap-4">
+                        <input type="range" id="plantSize" min="30" max="150" value="80" class="flex-1 cursor-pointer accent-[#064e3b]">
+                        <span id="plantSizeDisplay" class="font-mono font-bold w-10">80</span>
+                    </div>
                 </div>
 
                 <div class="p-4 bg-gray-50 rounded-md border border-gray-200">
-                    <label class="block text-sm font-bold mb-1 text-gray-600 uppercase">2. Stoffname (Mitte)</label>
-                    <input type="text" id="substanceName" class="w-full p-3 border-2 rounded-md font-bold mb-3 outline-none focus:border-[#064e3b]" placeholder="z.B. Natronlauge 50%">
-                    <label class="flex justify-between text-xs font-bold text-gray-500 uppercase">
-                        <span>Schriftgröße Stoff</span>
-                        <span id="substanceSizeDisplay">45</span>
-                    </label>
-                    <input type="range" id="substanceSize" min="10" max="150" value="45" class="w-full cursor-pointer accent-[#064e3b]">
+                    <label class="block text-sm font-bold mb-1 text-gray-600 uppercase">2. Stoffname (Mitte - max 30 Zeichen)</label>
+                    <input type="text" id="substanceName" maxlength="50" class="w-full p-3 border-2 rounded-md font-bold mb-3 outline-none focus:border-[#064e3b]" placeholder="z.B. NATRONLAUGE 50%">
+                    <div class="flex items-center gap-4">
+                        <input type="range" id="substanceSize" min="20" max="100" value="50" class="flex-1 cursor-pointer accent-[#064e3b]">
+                        <span id="substanceSizeDisplay" class="font-mono font-bold w-10">50</span>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
@@ -53,37 +51,38 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-bold mb-1 text-gray-600 uppercase">Format</label>
+                        <label class="block text-sm font-bold mb-1 text-gray-600 uppercase">Textformat</label>
                         <select id="textCase" class="w-full p-3 border-2 rounded-md font-bold outline-none focus:border-[#064e3b]">
-                            <option value="upper">GROSS</option>
-                            <option value="original">Original</option>
+                            <option value="upper">NUR GROSSBUCHSTABEN</option>
+                            <option value="original">Originalschreibweise</option>
                         </select>
                     </div>
                 </div>
 
                 <div>
                     <label class="block text-sm font-bold mb-2 text-gray-600 uppercase">GHS Symbole (Max. 6)</label>
-                    <div id="ghsPicker" class="grid grid-cols-3 md:grid-cols-5 gap-2 bg-white p-3 rounded-md border-2"></div>
+                    <div id="ghsPicker" class="grid grid-cols-5 gap-2 bg-white p-3 rounded-md border-2"></div>
                 </div>
             </div>
 
-            <button id="pdfBtn" class="w-full bg-[#064e3b] text-white py-4 rounded-md font-black text-2xl hover:bg-green-800 transition-all shadow-md mt-8 tracking-widest">
-                PDF GENERIEREN (A4)
+            <button id="pdfBtn" class="w-full bg-[#064e3b] text-white py-4 rounded-md font-black text-2xl hover:bg-green-800 transition-all shadow-md mt-8 tracking-widest uppercase">
+                A4 PDF Erstellen
             </button>
         </section>
 
         <section class="flex flex-col items-center">
-            <span class="text-sm font-bold text-gray-400 mb-3 uppercase tracking-widest">Vorschau (A4 Quer)</span>
-            <div class="preview-wrapper shadow-2xl">
-                <div id="previewCard" class="label-box">
-                    <div id="pPlant" class="zone zone-top">ANLAGENTEIL</div>
-                    <div id="pSubstance" class="zone zone-mid">STOFFNAME</div>
-                    <div class="zone zone-bottom">
-                        <div id="pGhs" class="ghs-row"></div>
-                        <div id="pSignal" class="signal-word"></div>
+            <span class="text-sm font-bold text-gray-400 mb-3 uppercase tracking-widest">Echtzeit-Vorschau</span>
+            <div class="preview-container shadow-2xl">
+                <div id="previewCard" class="label-canvas">
+                    <div id="pPlant" class="row-zone top">ANLAGENTEIL</div>
+                    <div id="pSubstance" class="row-zone mid">STOFFNAME</div>
+                    <div class="row-zone bot">
+                        <div id="pGhs" class="ghs-flex"></div>
+                        <div id="pSignal" class="signal-text"></div>
                     </div>
                 </div>
             </div>
+            <p class="mt-4 text-xs text-gray-400 text-center uppercase tracking-tighter">Das Layout entspricht einem A4 Blatt im Querformat</p>
         </section>
     </main>
 
