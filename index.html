@@ -1,1 +1,87 @@
 
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BEHÄLTER DRUCK APP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100 text-gray-900 font-sans min-h-screen">
+
+    <header class="bg-[#064e3b] p-5 shadow-md">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-black text-white tracking-widest uppercase">BEHÄLTER APP</h1>
+            <a href="https://thionbas.github.io/printerapp" class="text-white border border-white px-4 py-1 rounded hover:bg-white hover:text-[#064e3b] transition">ZURÜCK</a>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-2 gap-10 mt-6">
+        
+        <section class="bg-white p-8 rounded-lg shadow-xl border border-gray-200">
+            <h2 class="text-xl font-bold border-b pb-2 mb-6 uppercase text-gray-700">Konfiguration</h2>
+            
+            <div class="space-y-5">
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="col-span-2">
+                        <label class="block text-sm font-bold mb-1 text-gray-600 uppercase">Textinhalt</label>
+                        <input type="text" id="mainText" class="w-full p-3 border-2 rounded-md font-bold outline-none focus:border-[#064e3b]" placeholder="z.B. Stickstoff">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-1 text-gray-600 uppercase">Format</label>
+                        <select id="textCase" class="w-full p-3 border-2 rounded-md font-bold outline-none focus:border-[#064e3b]">
+                            <option value="upper">GROSS</option>
+                            <option value="lower">klein</option>
+                            <option value="original">Original</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="flex justify-between text-sm font-bold mb-1 text-gray-600 uppercase">
+                        <span>Schriftgröße Text</span>
+                        <span id="textSizeDisplay" class="text-[#064e3b]">60</span>
+                    </label>
+                    <input type="range" id="textSize" min="20" max="150" value="60" class="w-full cursor-pointer accent-[#064e3b]">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold mb-1 text-gray-600 uppercase">Signalwort</label>
+                    <select id="signal" class="w-full p-3 border-2 rounded-md font-bold outline-none focus:border-[#064e3b]">
+                        <option value="">Keines</option>
+                        <option value="GEFAHR">GEFAHR</option>
+                        <option value="ACHTUNG">ACHTUNG</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold mb-2 text-gray-600 uppercase">GHS Symbole (Max. 5)</label>
+                    <div id="ghsPicker" class="grid grid-cols-3 md:grid-cols-5 gap-2 bg-gray-50 p-3 rounded-md border-2">
+                    </div>
+                </div>
+            </div>
+
+            <button id="pdfBtn" class="w-full bg-[#064e3b] text-white py-4 rounded-md font-black text-2xl hover:bg-green-800 transition-all shadow-md mt-8 tracking-widest">
+                PDF GENERIEREN (A4)
+            </button>
+        </section>
+
+        <section class="flex flex-col items-center">
+            <span class="text-sm font-bold text-gray-400 mb-3 uppercase tracking-widest">Vorschau (A4 Quer)</span>
+            <div class="preview-wrapper shadow-2xl">
+                <div id="previewCard" class="label-box">
+                    <div id="pText" class="label-text">TEXT</div>
+                    <div class="label-bottom">
+                        <div id="pGhs" class="ghs-zone-center"></div>
+                        <div id="pSignal" class="signal-word-center"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
